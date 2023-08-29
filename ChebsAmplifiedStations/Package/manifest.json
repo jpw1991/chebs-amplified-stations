@@ -1,0 +1,9 @@
+﻿{
+  "name": "ChebsAmplifiedStations",
+  "description": "A workstation range-extender and daisy-chain mod.",
+  "version_number": "0.0.1",
+  "website_url": "https://github.com/jpw1991/chebs-amplified-stations",
+  "dependencies": [
+    "ValheimModding-Jotunn-2.11.2"
+  ]
+}
