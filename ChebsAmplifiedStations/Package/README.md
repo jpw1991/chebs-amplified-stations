@@ -1,4 +1,4 @@
-# ChebsAmplifiedStations
+# Cheb's Amplified Stations
 
 A workstation range-extender and daisy-chain mod.
 
@@ -33,7 +33,6 @@ b) Write to me on [Discord](https://discord.com/invite/EB96ASQ).
 - Valheim
 - BepInEx
 - Jotunn
-- Cheb's Valheim Library (included)
 
 ## Installation (manual)
 
@@ -43,11 +42,7 @@ A correct installation looks like:
 
 ```sh
 plugins/
-├── Translations
-├── chebsamplifiedstations
-├── chebsamplifiedstations.manifest
 ├── ChebsAmplifiedStations.dll
-├── ChebsValheimLibrary.dll
 └── ... other mods ...
 ```
 
@@ -73,7 +68,7 @@ You can find the github [here](https://github.com/jpw1991/chebs-amplified-statio
 ## Special Thanks
 
 - Ennea for commissioning the mod.
-- 
+- [rolopolo](https://github.com/rolopogo) for their work on the [daisychain](https://github.com/rolopogo/ValheimMods/tree/main/DaisyChain) mod, from which the daisy-chaining part of this mod is derived.
 
 ## Changelog
 
@@ -82,7 +77,7 @@ You can find the github [here](https://github.com/jpw1991/chebs-amplified-statio
 
  Date | Version | Notes 
 --- | --- | ---
-25/07/2023 | 0.0.1 | First alpha version
+30/08/2023 | 0.0.1 | First alpha version
 
 </details>
 

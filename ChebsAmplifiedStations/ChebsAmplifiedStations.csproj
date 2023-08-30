@@ -123,6 +123,7 @@
     <Compile Include="CraftingStations\CraftingStation.cs" />
     <Compile Include="CraftingStations\Forge.cs" />
     <Compile Include="CraftingStations\Workbench.cs" />
+    <Compile Include="Patches\CraftingStationPatches.cs" />
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
     <Compile Include="ChebsAmplifiedStations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

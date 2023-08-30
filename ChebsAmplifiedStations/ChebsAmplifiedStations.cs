@@ -1,5 +1,7 @@
-﻿using BepInEx;
+﻿using System.Collections.Generic;
+using BepInEx;
 using ChebsAmplifiedStations.CraftingStations;
+using HarmonyLib;
 using Jotunn;
 using Jotunn.Managers;
 using Jotunn.Utils;
@@ -13,7 +15,9 @@ namespace ChebsAmplifiedStations
     {
         public const string PluginGuid = "com.chebgonaz.chebsamplifiedstations";
         public const string PluginName = "ChebsAmplifiedStations";
-        public const string PluginVersion = "0.0.1";
+        public const string PluginVersion = "0.0.2";
+        
+        private readonly Harmony _harmony = new(PluginGuid);
 
         private ArtisanTable _artisanTable = new();
         private BlackForge _blackForge = new();
@@ -25,6 +29,8 @@ namespace ChebsAmplifiedStations
         private void Awake()
         {
             CreateConfigValues();
+            
+            _harmony.PatchAll();
 
             PrefabManager.OnVanillaPrefabsAvailable += DoOnVanillaPrefabsAvailable;
         }
@@ -32,12 +38,18 @@ namespace ChebsAmplifiedStations
         private void DoOnVanillaPrefabsAvailable()
         {
             PrefabManager.OnVanillaPrefabsAvailable -= DoOnVanillaPrefabsAvailable;
-            
-            _artisanTable.SetRange();
-            _blackForge.SetRange();
-            _cauldron.SetRange();
-            _forge.SetRange();
-            _workbench.SetRange();
+
+            foreach (var prefabName in new List<string>()
+                     {
+                         _artisanTable.PrefabName,
+                         _blackForge.PrefabName,
+                         _cauldron.PrefabName,
+                         _forge.PrefabName,
+                         _workbench.PrefabName,
+                     })
+            {
+                CraftingStations.CraftingStation.SetRange(prefabName);
+            }
         }
 
         private void CreateConfigValues()

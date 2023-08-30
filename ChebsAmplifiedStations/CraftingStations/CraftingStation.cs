@@ -17,10 +17,7 @@ namespace ChebsAmplifiedStations.CraftingStations
         /// </summary>
         public static ConfigEntry<float> BaseRange;
 
-        /// <summary>
-        /// The internal name of the prefab.
-        /// </summary>
-        public const string PrefabName = "";
+        public virtual string PrefabName => "";
 
         public virtual void CreateConfigs(BaseUnityPlugin plugin)
         {
@@ -37,12 +34,12 @@ namespace ChebsAmplifiedStations.CraftingStations
                     new ConfigurationManagerAttributes { IsAdminOnly = true }));
         }
 
-        public void SetRange()
+        public static void SetRange(string prefabName)
         {
-            var prefab = PrefabManager.Instance.GetPrefab(PrefabName);
+            var prefab = PrefabManager.Instance.GetPrefab(prefabName);
             if (prefab == null)
             {
-                Logger.LogError($"Failed to get {PrefabName} prefab.");
+                Logger.LogError($"Failed to get {prefabName} prefab.");
                 return;
             }
 

@@ -2,6 +2,6 @@ namespace ChebsAmplifiedStations.CraftingStations
 {
     public class Forge : CraftingStation
     {
-        public new const string PrefabName = "piece_forge";
+        public override string PrefabName => "forge";
     }
 }
