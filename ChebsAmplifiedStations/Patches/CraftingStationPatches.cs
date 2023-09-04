@@ -9,17 +9,19 @@ namespace ChebsAmplifiedStations.Patches
     // https://github.com/rolopogo/ValheimMods/blob/main/DaisyChain/DaisyChain/CraftingStation_Patch.cs
     //
     // Thanks to DaisyChain's developers.
-    
-    [HarmonyPatch(typeof(CraftingStation))]
+
+    [HarmonyPatch(typeof(CraftingStation))] 
     public class CraftingStationPatches
     {
         [HarmonyPostfix]
         [HarmonyPatch(nameof(CraftingStation.HaveBuildStationInRange))]
         static void HaveBuildStationInRangePostfix(string name, Vector3 point, CraftingStation __instance, ref CraftingStation __result)
         {
+            if (!ChebsAmplifiedStations.DaisyChainEnabled.Value) return;
+            
             foreach (var craftingStation in CraftingStation.m_allStations)
             {
-                if (Vector3.Distance(craftingStation.transform.position, point) < craftingStation.m_rangeBuild)
+                if (Vector3.Distance(craftingStation.transform.position, point) < craftingStation.GetStationBuildRange())
                 {
                     var networkStations = new List<CraftingStation>();
                     RecursiveAddNearbyStations(craftingStation, ref networkStations, CraftingStation.m_allStations);
@@ -45,7 +47,7 @@ namespace ChebsAmplifiedStations.Patches
 
             foreach (var craftingStation in allStations)
             {
-                if (Vector3.Distance(craftingStation.transform.position, from.transform.position) < Mathf.Max(craftingStation.m_rangeBuild, from.m_rangeBuild))
+                if (Vector3.Distance(craftingStation.transform.position, from.transform.position) < Mathf.Max(craftingStation.GetStationBuildRange(), from.GetStationBuildRange()))
                 {
                     RecursiveAddNearbyStations(craftingStation, ref networkStations, allStations);
                 }

@@ -122,6 +122,7 @@
     <Compile Include="CraftingStations\Cauldron.cs" />
     <Compile Include="CraftingStations\CraftingStation.cs" />
     <Compile Include="CraftingStations\Forge.cs" />
+    <Compile Include="CraftingStations\Stonecutter.cs" />
     <Compile Include="CraftingStations\Workbench.cs" />
     <Compile Include="Patches\CraftingStationPatches.cs" />
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
