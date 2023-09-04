@@ -51,7 +51,8 @@ plugins/
 Detailed info in the [wiki](https://github.com/jpw1991/chebs-amplified-stations/wiki). Here's the short version:
 
 - Extend the workstation ranges beyond their normal limits.
-- Connect the effects of the workstations that are within range of each other.
+- Customize each workstation's limits individually.
+- Connect the effects of the workstations that are within range of each other (daisy-chaining).
 
 ### Config
 

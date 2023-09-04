@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BepInEx;
+using BepInEx.Configuration;
 using ChebsAmplifiedStations.CraftingStations;
 using HarmonyLib;
 using Jotunn;
@@ -15,7 +16,9 @@ namespace ChebsAmplifiedStations
     {
         public const string PluginGuid = "com.chebgonaz.chebsamplifiedstations";
         public const string PluginName = "ChebsAmplifiedStations";
-        public const string PluginVersion = "0.0.2";
+        public const string PluginVersion = "0.0.4";
+        
+        public static ConfigEntry<bool> DaisyChainEnabled;
         
         private readonly Harmony _harmony = new(PluginGuid);
 
@@ -24,6 +27,7 @@ namespace ChebsAmplifiedStations
         private Cauldron _cauldron = new();
         private Forge _forge = new();
         private Workbench _workbench = new();
+        private Stonecutter _stonecutter = new();
         
 
         private void Awake()
@@ -46,6 +50,7 @@ namespace ChebsAmplifiedStations
                          _cauldron.PrefabName,
                          _forge.PrefabName,
                          _workbench.PrefabName,
+                         _stonecutter.PrefabName,
                      })
             {
                 CraftingStations.CraftingStation.SetRange(prefabName);
@@ -55,12 +60,18 @@ namespace ChebsAmplifiedStations
         private void CreateConfigValues()
         {
             Config.SaveOnConfigSet = true;
+            
+            DaisyChainEnabled = Config.Bind("DaisyChain", "DaisyChainEnabled",
+                true, new ConfigDescription(
+                    "Whether or not daisy-chaining is enabled (connect the effects of the workstations that are within range of each other).", null,
+                    new ConfigurationManagerAttributes { IsAdminOnly = true }));
 
             _artisanTable.CreateConfigs(this);
             _blackForge.CreateConfigs(this);
             _cauldron.CreateConfigs(this);
             _forge.CreateConfigs(this);
             _workbench.CreateConfigs(this);
+            _stonecutter.CreateConfigs(this);
         }
     }
 }

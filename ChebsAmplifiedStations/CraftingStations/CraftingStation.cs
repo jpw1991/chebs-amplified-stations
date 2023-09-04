@@ -10,7 +10,7 @@ namespace ChebsAmplifiedStations.CraftingStations
         /// <summary>
         /// How much the range will increase per level of the crafting station.
         /// </summary>
-        public static ConfigEntry<float> LevelRangeMultiplier;
+        public static ConfigEntry<float> LevelRangeIncrease;
         
         /// <summary>
         /// The base range of the crafting station.
@@ -23,13 +23,13 @@ namespace ChebsAmplifiedStations.CraftingStations
         {
             var serverSynced = $"{GetType().Name} (Server Synced)";
 
-            LevelRangeMultiplier = plugin.Config.Bind(serverSynced, "LevelRangeMultiplier",
-                50f, new ConfigDescription(
+            LevelRangeIncrease = plugin.Config.Bind(serverSynced, "LevelRangeIncrease",
+                10f, new ConfigDescription(
                     "How much the range will increase per level of the crafting station.", null,
                     new ConfigurationManagerAttributes { IsAdminOnly = true }));
             
             BaseRange = plugin.Config.Bind(serverSynced, "BaseRange",
-                50f, new ConfigDescription(
+                20f, new ConfigDescription(
                     "How much the range will increase per level of the crafting station.", null,
                     new ConfigurationManagerAttributes { IsAdminOnly = true }));
         }
@@ -50,7 +50,7 @@ namespace ChebsAmplifiedStations.CraftingStations
             }
 
             craftingStation.m_rangeBuild = BaseRange.Value;
-            craftingStation.m_extraRangePerLevel = LevelRangeMultiplier.Value;
+            craftingStation.m_extraRangePerLevel = LevelRangeIncrease.Value;
         }
     }
 }
