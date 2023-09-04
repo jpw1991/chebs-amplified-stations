@@ -16,7 +16,7 @@ namespace ChebsAmplifiedStations
     {
         public const string PluginGuid = "com.chebgonaz.chebsamplifiedstations";
         public const string PluginName = "ChebsAmplifiedStations";
-        public const string PluginVersion = "0.0.4";
+        public const string PluginVersion = "0.0.5";
         
         public static ConfigEntry<bool> DaisyChainEnabled;
         
