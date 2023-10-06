@@ -78,6 +78,7 @@ You can find the github [here](https://github.com/jpw1991/chebs-amplified-statio
 
  Date | Version | Notes 
 --- | --- | ---
+06/10/2023 | 1.1.0 | update of packages and recompile for hildr's request
 04/09/2023 | 1.0.0 | release
 30/08/2023 | 0.0.1 | First alpha version
 
