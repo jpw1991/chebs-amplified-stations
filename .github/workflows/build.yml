@@ -73,13 +73,8 @@ jobs:
           done
           [ ! -f "/home/runner/Jotunn.dll" ] && echo "Jotunn.dll not found!"
           cat ${{env.name}}/${{env.name}}.csproj
-      - name: Install dependencies
-        run: |
-          dotnet restore
-          nuget restore -SolutionDirectory ${{env.name}}/packages.config
-          dotnet tool restore
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release
       - name: Package
         run: |
           [ ! -f "/publish_release.sh" ] && echo "publish_release.sh not found!"
