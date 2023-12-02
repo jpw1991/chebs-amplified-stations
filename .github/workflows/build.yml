@@ -14,6 +14,7 @@ env:
   name: ChebsAmplifiedStations
   jsonf: manifest.json
   bepinexdl: https://github.com/BepInEx/BepInEx/releases/download/v5.4.21/BepInEx_unix_5.4.21.0.zip
+  valheiminstalldir: /home/runner/.local/share/Steam/steamapps/common/Valheim
 
 jobs:
   build:
@@ -34,25 +35,33 @@ jobs:
           version="$(jq -r '.version_number' $(find ./${{env.name}}/Package -name ${{env.jsonf}}))"
           echo "VERSION=${version}" >> $GITHUB_ENV
 
-      - name: Delete old Valheim directory
+      - name: Get Valheim version id
         run: |
-          rm -rdf /home/runner/.local/share/Steam/steamapps/common/Valheim
+          valheimversion="$(curl -s https://api.steamcmd.net/v1/info/896660 | jq -r ".data.\"896660\".depots.branches.public.buildid")"
+          echo "VALHEIMVERSION=${valheimversion}" >> $GITHUB_ENV
+
+      - name: Cache Valheim
+        id: cachevalheim
+        uses: actions/cache@v3
+        with:
+          path: ${{env.valheiminstalldir}}
+          key: ${{ env.VALHEIMVERSION}}-${{hashFiles('**/lockfiles')}}-BepInEx_unix_5.4.21
+      
       - name: Download and install SteamCMD (64-bit)
+        if: steps.cachevalheim.outputs.cache-hit != 'true'
         run: |
           mkdir steamcmd
           cd steamcmd
           wget https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz
           tar -xvzf steamcmd_linux.tar.gz
           cd ..
-      - name: Install Valheim
-        run: |
-          ./steamcmd/steamcmd.sh +force_install_dir /home/runner/.local/share/Steam/steamapps/common/Valheim +login anonymous +app_update 896660 validate +exit
+          ./steamcmd/steamcmd.sh +force_install_dir ${{env.valheiminstalldir}} +login anonymous +app_update 896660 validate +exit
       - name: Install BepInEx
         run: |
-          mv /home/runner/.local/share/Steam/steamapps/common/Valheim/valheim_server_Data/ /home/runner/.local/share/Steam/steamapps/common/Valheim/valheim_Data/
+          mv ${{env.valheiminstalldir}}/valheim_server_Data/ ${{env.valheiminstalldir}}/valheim_Data/
           wget -O BepInEx.zip ${{ env.bepinexdl }}
           unzip BepInEx.zip -d ~/BepInEx
-          mv ~/BepInEx/* /home/runner/.local/share/Steam/steamapps/common/Valheim/
+          mv ~/BepInEx/* ${{env.valheiminstalldir}}/
       - name: Replace paths inside csproj
         run: |
           sed -i -E "s/(\.\.\\\.\.\\\.\.\\\.local)/\\\\home\\\runner\\\.local/g" ${{env.name}}/${{env.name}}.csproj
@@ -69,7 +78,7 @@ jobs:
       - name: Confirm existence of critical files
         run : |
           for test in "BepInEx/core/BepInEx.dll" "valheim_Data/Managed/assembly_guiutils.dll" "valheim_Data/Managed/assembly_postprocessing.dll" "valheim_Data/Managed/assembly_utils.dll" "valheim_Data/Managed/assembly_valheim.dll" "valheim_Data/Managed/UnityEngine.dll" "valheim_Data/Managed/UnityEngine.AssetBundleModule.dll" "valheim_Data/Managed/UnityEngine.CoreModule.dll" "valheim_Data/Managed/UnityEngine.ParticleSystemModule.dll" "valheim_Data/Managed/UnityEngine.Physics2DModule.dll" "valheim_Data/Managed/UnityEngine.PhysicsModule.dll"; do
-              [ ! -f "/home/runner/.local/share/Steam/steamapps/common/Valheim/$test" ] && echo "$test not found!"
+              [ ! -f "${{env.valheiminstalldir}}/$test" ] && echo "$test not found!"
           done
           [ ! -f "/home/runner/Jotunn.dll" ] && echo "Jotunn.dll not found!"
           cat ${{env.name}}/${{env.name}}.csproj
