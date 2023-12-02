@@ -76,7 +76,7 @@ jobs:
       - name: Install dependencies
         run: |
           dotnet restore
-          nuget restore -SolutionDirectory ${{env.name}}/packages.config
+          nuget restore ${{env.name}}/packages.config
           dotnet tool restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
@@ -95,6 +95,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ env.VERSION }}
+          draft: true
           body: ${{github.event.workflow_run.head_commit.message}}
           files: |
             ${{env.name}}/bin/Release/${{env.name}}.${{env.VERSION}}.zip
