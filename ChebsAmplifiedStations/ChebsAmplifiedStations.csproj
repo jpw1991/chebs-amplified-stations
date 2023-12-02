@@ -121,6 +121,7 @@
     <Folder Include="Package\plugins\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Package\manifest.json" />
   </ItemGroup>
   <ItemGroup>

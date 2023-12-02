@@ -76,7 +76,7 @@ jobs:
       - name: Install dependencies
         run: |
           dotnet restore
-          nuget restore
+          nuget restore -SolutionDirectory ${{env.name}}/packages.config
           dotnet tool restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
