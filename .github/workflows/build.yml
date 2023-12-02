@@ -75,8 +75,9 @@ jobs:
           cat ${{env.name}}/${{env.name}}.csproj
       - name: Install dependencies
         run: |
+          mkdir packages
           dotnet restore
-          nuget restore ${{env.name}}/packages.config
+          nuget restore -PackagesDirectory packages ${{env.name}}/packages.config
           dotnet tool restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
