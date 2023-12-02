@@ -83,7 +83,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
       - name: Package
         run: |
-          [ ! -f "/publish_release.sh" ] && echo "publish_release.sh not found!"
+          mkdir ${{env.name}}/Package/plugins
           ./publish_release.sh ${{env.VERSION}}
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
