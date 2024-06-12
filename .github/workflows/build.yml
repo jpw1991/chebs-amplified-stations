@@ -84,14 +84,8 @@ jobs:
           done
           [ ! -f "/home/runner/Jotunn.dll" ] && echo "Jotunn.dll not found!"
           cat ${{env.name}}/${{env.name}}.csproj
-      - name: Install dependencies
-        run: |
-          mkdir packages
-          dotnet restore
-          nuget restore -PackagesDirectory packages ${{env.name}}/packages.config
-          dotnet tool restore
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release
       - name: Package
         run: |
           mkdir ${{env.name}}/Package/plugins
