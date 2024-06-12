@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEBUGDIR=ChebsAmplifiedStations/bin/Debug
+DEBUGDIR=ChebsAmplifiedStations/bin/Debug/net48
 DLL=$DEBUGDIR/ChebsAmplifiedStations.dll
 #PLUGINS=/home/$USER/.local/share/Steam/steamapps/common/Valheim/BepInEx/plugins
 PLUGINS=/home/$USER/.config/r2modmanPlus-local/Valheim/profiles/cheb-development/BepInEx/plugins/ChebGonaz-ChebsAmplifiedStations

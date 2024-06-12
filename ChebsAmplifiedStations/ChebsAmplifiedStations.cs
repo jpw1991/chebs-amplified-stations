@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BepInEx;
+﻿using BepInEx;
 using BepInEx.Configuration;
 using ChebsAmplifiedStations.CraftingStations;
 using HarmonyLib;

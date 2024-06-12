@@ -8,12 +8,12 @@ on:
     branches:
       - master
     tags:
-      - build-*
+      - v*
 
 env:
   name: ChebsAmplifiedStations
   jsonf: manifest.json
-  bepinexdl: https://github.com/BepInEx/BepInEx/releases/download/v5.4.21/BepInEx_unix_5.4.21.0.zip
+  bepinexdl: https://github.com/BepInEx/BepInEx/releases/download/v5.4.23/BepInEx_unix_5.4.23.2.zip
   valheiminstalldir: /home/runner/.local/share/Steam/steamapps/common/Valheim
 
 jobs:
@@ -29,11 +29,14 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
-      
+
       - name: Get version
         run: |
           version="$(jq -r '.version_number' $(find ./${{env.name}}/Package -name ${{env.jsonf}}))"
           echo "VERSION=${version}" >> $GITHUB_ENV
+          #jq -r '.dependencies[]' $(find ./ChebsAmplifiedStations/Package -name manifest.json) | grep "ValheimModding-Jotunn" | sed 's/.*-\(.*\)/\1/'
+          jotunnversion="$(jq -r '.dependencies[]' $(find ./${{env.name}}/Package -name ${{env.jsonf}}) | grep \"ValheimModding-Jotunn\" | sed 's/.*-\(.*\)/\1/' )"
+          echo "JOTUNNVERSION=${jotunnversion}" >> $GITHUB_ENV
 
       - name: Get Valheim version id
         run: |
@@ -46,7 +49,7 @@ jobs:
         with:
           path: ${{env.valheiminstalldir}}
           key: ${{ env.VALHEIMVERSION}}-${{hashFiles('**/lockfiles')}}-BepInEx_unix_5.4.21
-      
+
       - name: Download and install SteamCMD (64-bit)
         if: steps.cachevalheim.outputs.cache-hit != 'true'
         run: |
@@ -71,7 +74,7 @@ jobs:
       - name: Manual install Jotunn
         run: |
           echo "For some reason Jotunn via nuget won't work here, so manual install and link it. Remove this whenever possible"
-          wget https://github.com/Valheim-Modding/Jotunn/releases/download/v2.15.0/Jotunn.dll
+          wget https://github.com/Valheim-Modding/Jotunn/releases/download/v${{env.JOTUNNVERSION}}/Jotunn.dll
           mv Jotunn.dll /home/runner
           refcontent='<Reference Include="Jotunn"><HintPath>\\home\\runner\\Jotunn.dll</HintPath></Reference>'
           sed -i '/<Reference\sInclude="UnityEngine.PhysicsModule">/i\'"$refcontent" ${{env.name}}/${{env.name}}.csproj

@@ -4,6 +4,6 @@
   "version_number": "1.1.2",
   "website_url": "https://github.com/jpw1991/chebs-amplified-stations",
   "dependencies": [
-    "ValheimModding-Jotunn-2.15.0"
+    "ValheimModding-Jotunn-2.20.1"
   ]
 }
