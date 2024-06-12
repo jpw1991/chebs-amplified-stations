@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RELEASEDIR=ChebsAmplifiedStations/bin/Release
+RELEASEDIR=ChebsAmplifiedStations/bin/Release/net48
 DLL=$RELEASEDIR/ChebsAmplifiedStations.dll
 PLUGINS=ChebsAmplifiedStations/Package/plugins
 README=README.md
