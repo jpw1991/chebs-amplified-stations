@@ -35,7 +35,7 @@ jobs:
           version="$(jq -r '.version_number' $(find ./${{env.name}}/Package -name ${{env.jsonf}}))"
           echo "VERSION=${version}" >> $GITHUB_ENV
           #jq -r '.dependencies[]' $(find ./ChebsAmplifiedStations/Package -name manifest.json) | grep "ValheimModding-Jotunn" | sed 's/.*-\(.*\)/\1/'
-          jotunnversion="$(jq -r '.dependencies[]' $(find ./${{env.name}}/Package -name ${{env.jsonf}}) | grep \"ValheimModding-Jotunn\" | sed 's/.*-\(.*\)/\1/' )"
+          jotunnversion="$(jq -r '.dependencies[]' $(find ./${{env.name}}/Package -name ${{env.jsonf}}) | grep ValheimModding-Jotunn | sed 's/.*-\(.*\)/\1/')"
           echo "JOTUNNVERSION=${jotunnversion}" >> $GITHUB_ENV
 
       - name: Get Valheim version id
