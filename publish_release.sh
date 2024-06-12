@@ -34,7 +34,7 @@ fi
 cp -f "$DLL" "$PLUGINS" || { echo "Error: Failed to copy $DLL"; exit 1; }
 cp -f "$README" "$PLUGINS/../README.md" || { echo "Error: Failed to copy $README"; exit 1; }
 
-ZIPDESTINATION="../bin/Release/ChebsAmplifiedStations.$VERSION.zip"
+ZIPDESTINATION="../bin/Release/net48/ChebsAmplifiedStations.$VERSION.zip"
 
 cd "$PLUGINS/.."
 if [ ! -z "$VERSION" ]; then
