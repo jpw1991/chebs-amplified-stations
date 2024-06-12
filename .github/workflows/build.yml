@@ -13,7 +13,7 @@ on:
 env:
   name: ChebsAmplifiedStations
   jsonf: manifest.json
-  bepinexdl: https://github.com/BepInEx/BepInEx/releases/download/v5.4.23/BepInEx_unix_5.4.23.2.zip
+  bepinexdl: https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.2/BepInEx_linux_x64_5.4.23.2.zip
   valheiminstalldir: /home/runner/.local/share/Steam/steamapps/common/Valheim
 
 jobs:
@@ -48,8 +48,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{env.valheiminstalldir}}
-          key: ${{ env.VALHEIMVERSION}}-${{hashFiles('**/lockfiles')}}-BepInEx_unix_5.4.21
-
+          key: ${{ env.VALHEIMVERSION}}-${{hashFiles('**/lockfiles')}}-BepInEx_unix_5.4.23
       - name: Download and install SteamCMD (64-bit)
         if: steps.cachevalheim.outputs.cache-hit != 'true'
         run: |
