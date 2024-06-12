@@ -100,7 +100,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: thunderstore-package-artifact
-          path: ${{ env.name }}/bin/Release/${{ env.name }}.${{ env.VERSION }}.zip
+          path: ${{ env.name }}/bin/Release/net48/${{ env.name }}.${{ env.VERSION }}.zip
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
